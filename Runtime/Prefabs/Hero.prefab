@@ -684,9 +684,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4787348242138999958, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2909828166162118202, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 580665275928829057, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
       propertyPath: m_Name
       value: T_Pose
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835216545583623362, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871336845402611483, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364381112054687255, guid: 1d4351044c3746041a87fc084b41d4ca, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

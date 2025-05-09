@@ -15,7 +15,7 @@ namespace WelwiseCharacter.Runtime.Scripts.ClientInput
 
         public bool IsJump() => _mobileHud.JumpButton.IsPressed();
 
-        public CameraInputData GetCameraInput()
+        public CameraInputData GetCameraInputData()
         {
             if (UnityEngine.Input.touchCount <= 0) return new CameraInputData();
 

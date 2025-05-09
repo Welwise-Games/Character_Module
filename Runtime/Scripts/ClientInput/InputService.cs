@@ -68,15 +68,12 @@ namespace WelwiseCharacter.Runtime.Scripts.ClientInput
 
         private void HandleCameraInput()
         {
-            var isCameraRotate = _inputHandler.GetCameraInput();
+            var isCameraRotate = _inputHandler.GetCameraInputData();
             if (_inputHandler.SwitchCameraMode()) _cameraComponent.SwitchCameraMode();
-            if (isCameraRotate.IsPressed && CursorSwitcher.IsCursorEnabled)
+            
+            if (isCameraRotate.IsPressed && CursorSwitcherTools.IsCursorEnabled || !CursorSwitcherTools.IsCursorEnabled)
             {
-                _cameraComponent.Rotate(isCameraRotate.InputX, isCameraRotate.InputY);
-            }
-            else if (!CursorSwitcherTools.IsCursorEnabled)
-            {
-                _cameraComponent.Rotate(isCameraRotate.InputX, isCameraRotate.InputY);
+                _cameraComponent.Rotate(isCameraRotate.InputAxisX, isCameraRotate.InputAxisY);
             }
         }
 

@@ -13,7 +13,7 @@ namespace WelwiseCharacter.Runtime.Scripts.ClientInput
 
         public bool IsJump() => UnityEngine.Input.GetKeyDown(KeyCode.Space);
 
-        public CameraInputData GetCameraInput() =>
+        public CameraInputData GetCameraInputData() =>
             new(UnityEngine.Input.GetAxis("Mouse X"),
                 -UnityEngine.Input.GetAxis("Mouse Y"), Input.GetMouseButton(1));
 

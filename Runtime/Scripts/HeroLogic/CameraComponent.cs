@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace HeroLogic
+namespace WelwiseCharacter.Runtime.Scripts.HeroLogic
 {
     public class CameraComponent : MonoBehaviour
     {
@@ -18,13 +18,11 @@ namespace HeroLogic
 
         [SerializeField] private float _minZoomDistance = 2f;
         [SerializeField] private float _maxLookUpAngle = 30f;
-        [SerializeField] private float _zoomTransitionSpeed = 3f;
 
         public event Action<bool> OnCameraModeChanged;
-        public Camera Camera => _camera;
+        public Camera Camera { get; private set; }
 
         private Transform _target;
-        private Camera _camera;
         private bool _isInitialized;
         private float _currentHorizontalAngle = 0f;
         private float _currentVerticalAngle = 20f;
@@ -33,16 +31,12 @@ namespace HeroLogic
         private float _targetZoom = 1f;
         public float CameraDistance { get; private set; }
         public bool IsFirstCamera { get; private set; }
-        
-        private void Awake()
-        {
-            _camera = Camera.main;
-        }
 
-        public void SetTarget(Transform target)
+        public void Construct(Transform target, Camera mainCamera)
         {
             _target = target;
             _isInitialized = true;
+            Camera = mainCamera;
         }
         
 
@@ -73,7 +67,7 @@ namespace HeroLogic
 #if UNITY_EDITOR || UNITY_STANDALONE
             if (IsFirstCamera)
             {
-                CursorSwitcher.DisableCursor();
+                CursorSwitcherTools.DisableCursor();
             }
 #endif
         }
@@ -81,12 +75,12 @@ namespace HeroLogic
 
         private void UpdateFirstPersonCamera()
         {
-            _camera.transform.position = _fpsCameraPosition.position;
+            Camera.transform.position = _fpsCameraPosition.position;
     
             _currentVerticalAngle = Mathf.Clamp(_currentVerticalAngle, -90f, 90f);
             Quaternion rotation = Quaternion.Euler(_currentVerticalAngle, _currentHorizontalAngle, 0);
     
-            _camera.transform.rotation = rotation;
+            Camera.transform.rotation = rotation;
             transform.rotation = Quaternion.Euler(0, rotation.eulerAngles.y, 0);
         }
 
@@ -99,9 +93,9 @@ namespace HeroLogic
 
             float zoomFactor = Mathf.InverseLerp(_minZoomDistance / _offset.magnitude, 1f, _currentZoom);
             _additionalLookUpAngle = Mathf.Lerp(0f, _maxLookUpAngle, 1f - zoomFactor);
-            _camera.transform.position = desiredPosition;
-            CameraDistance = Vector3.Distance(_camera.transform.position, _target.position);
-            _camera.transform.LookAt(_target.position + Vector3.up * _additionalLookUpAngle * 0.1f);
+            Camera.transform.position = desiredPosition;
+            CameraDistance = Vector3.Distance(Camera.transform.position, _target.position);
+            Camera.transform.LookAt(_target.position + Vector3.up * (_additionalLookUpAngle * 0.1f));
         }
 
         public void Rotate(float inputX, float inputY)

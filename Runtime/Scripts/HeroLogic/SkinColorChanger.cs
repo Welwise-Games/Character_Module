@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HeroLogic
+namespace WelwiseCharacter.Runtime.Scripts.HeroLogic
 {
     public class SkinColorChanger : MonoBehaviour
     {

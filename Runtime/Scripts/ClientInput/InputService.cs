@@ -1,48 +1,53 @@
-using HeroLogic;
 using UnityEngine;
+using WelwiseCharacter.Runtime.Scripts.HeroLogic;
+using WelwiseSharedModule.Runtime.Scripts.Tools;
 
-namespace Input
+namespace WelwiseCharacter.Runtime.Scripts.ClientInput
 {
     public class InputService : MonoBehaviour
     {
         public bool IsEnabled { get; private set; }
 
-        private Hud _hud;
+        private MobileHud _mobileHud;
         private IInputHandler _inputHandler;
         private ICursorHandler _cursorHandler;
         private MoveComponent _moveComponent;
         private CameraComponent _cameraComponent;
         private bool _isInitialized;
 
-        public void Awake()
+        public void Construct(MobileHud mobileMobileHud, MoveComponent moveComponent, CameraComponent cameraComponent)
         {
-            _hud = FindObjectOfType<Hud>(true);
+            _mobileHud = mobileMobileHud;
+
 #if UNITY_STANDALONE
             _inputHandler = new InputHandler();
             _cursorHandler = (ICursorHandler)_inputHandler;
-            if (!CursorSwitcher.IsCursorEnabled)
-            {
+            
+            if (CursorSwitcher.IsCursorEnabled)
                 CursorSwitcher.DisableCursor();
-            }
 
 #elif UNITY_WEBGL
-            if (DeviceDetector.IsMobile())
+            if (DeviceDetectorTools.IsMobile())
             {
-                _hud.Enable();
-                _inputHandler = new MobileInputHandler(_hud);
+                _mobileHud.Enable();
+                _inputHandler = new MobileInputHandler(_mobileHud);
             }
             else
             {
                 _inputHandler = new InputHandler();
                 _cursorHandler = (ICursorHandler)_inputHandler;
-                if (!CursorSwitcher.IsCursorEnabled)
-                {
-                    CursorSwitcher.DisableCursor();
-                }
+                
+                if (CursorSwitcherTools.IsCursorEnabled)
+                    CursorSwitcherTools.DisableCursor();
             }
 #else
             _inputHandler = new MobileInputHandler(_hud);
 #endif
+            
+            _moveComponent = moveComponent;
+            _cameraComponent = cameraComponent;
+            _isInitialized = true;
+            IsEnabled = true;
         }
 
         private void Update()
@@ -63,14 +68,13 @@ namespace Input
 
         private void HandleCameraInput()
         {
-            var isCameraRotate = _inputHandler.IsCameraRotate();
+            var isCameraRotate = _inputHandler.GetCameraInput();
             if (_inputHandler.SwitchCameraMode()) _cameraComponent.SwitchCameraMode();
-            if (_hud.IsEnabled && _hud.Joystick.IsPointerDown) return;
             if (isCameraRotate.IsPressed && CursorSwitcher.IsCursorEnabled)
             {
                 _cameraComponent.Rotate(isCameraRotate.InputX, isCameraRotate.InputY);
             }
-            else if (!CursorSwitcher.IsCursorEnabled)
+            else if (!CursorSwitcherTools.IsCursorEnabled)
             {
                 _cameraComponent.Rotate(isCameraRotate.InputX, isCameraRotate.InputY);
             }
@@ -81,10 +85,7 @@ namespace Input
             if (_cursorHandler.SwitchCursor() && !_cameraComponent.IsFirstCamera) SwitchCursor();
         }
 
-        private void SwitchCursor()
-        {
-            CursorSwitcher.SwitchCursor();
-        }
+        private void SwitchCursor() => CursorSwitcherTools.SwitchCursor();
 
         private void HandleMovementInput()
         {
@@ -98,14 +99,6 @@ namespace Input
             {
                 _moveComponent.SetDirection(Vector3.zero);
             }
-        }
-
-        public void Initialize(MoveComponent moveComponent, CameraComponent cameraComponent)
-        {
-            _moveComponent = moveComponent;
-            _cameraComponent = cameraComponent;
-            _isInitialized = true;
-            IsEnabled = true;
         }
 
         public void DisableInput()

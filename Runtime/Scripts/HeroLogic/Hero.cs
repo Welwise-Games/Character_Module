@@ -1,8 +1,8 @@
-using HeroLogic.Animators;
-using Input;
 using UnityEngine;
+using WelwiseCharacter.Runtime.Scripts.ClientInput;
+using WelwiseCharacter.Runtime.Scripts.HeroLogic.Animators;
 
-namespace HeroLogic
+namespace WelwiseCharacter.Runtime.Scripts.HeroLogic
 {
     public class Hero : MonoBehaviour
     {

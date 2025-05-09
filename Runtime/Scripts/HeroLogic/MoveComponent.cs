@@ -1,7 +1,7 @@
-using HeroLogic.Animators;
 using UnityEngine;
+using WelwiseCharacter.Runtime.Scripts.HeroLogic.Animators;
 
-namespace HeroLogic
+namespace WelwiseCharacter.Runtime.Scripts.HeroLogic
 {
     public class MoveComponent : MonoBehaviour
     {
@@ -28,12 +28,12 @@ namespace HeroLogic
 
 
         public void Initialize(CameraComponent cameraComponent, HeroAnimatorController animatorComponent,
-            ArmsAnimatorController armsAnimatorComponent)
+            ArmsAnimatorController armsAnimatorComponent, Camera camera)
         {
             _cameraComponent = cameraComponent;
             _heroAnimatorComp = animatorComponent;
             _armsAnimatorComp = armsAnimatorComponent;
-            _playerCamera = Camera.main;
+            _playerCamera = camera;
             _isInitialized = true;
         }
 

@@ -1,4 +1,4 @@
-namespace HeroLogic
+namespace WelwiseCharacter.Runtime.Scripts.HeroLogic
 {
     public class CameraObserver
     {

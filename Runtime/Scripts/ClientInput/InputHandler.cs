@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace ClientInput
 {
     public class InputHandler : IDesktopInputHandler
     {

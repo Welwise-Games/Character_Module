@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace ClientInput
 {
     public class CustomUiButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

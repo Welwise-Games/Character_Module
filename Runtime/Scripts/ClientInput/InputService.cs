@@ -1,8 +1,8 @@
+using HeroLogic;
+using Tools;
 using UnityEngine;
-using WelwiseCharacter.Runtime.Scripts.HeroLogic;
-using WelwiseSharedModule.Runtime.Scripts.Tools;
 
-namespace WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace ClientInput
 {
     public class InputService : MonoBehaviour
     {
@@ -22,9 +22,8 @@ namespace WelwiseCharacter.Runtime.Scripts.ClientInput
 #if UNITY_STANDALONE
             _inputHandler = new InputHandler();
             _cursorHandler = (ICursorHandler)_inputHandler;
-            
-            if (CursorSwitcher.IsCursorEnabled)
-                CursorSwitcher.DisableCursor();
+            if (CursorSwitcherTools.IsCursorEnabled)
+                CursorSwitcherTools.DisableCursor();
 
 #elif UNITY_WEBGL
             if (DeviceDetectorTools.IsMobile())

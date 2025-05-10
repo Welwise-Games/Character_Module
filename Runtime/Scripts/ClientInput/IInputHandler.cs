@@ -1,4 +1,4 @@
-namespace WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace ClientInput
 {
     public interface IInputHandler
     {

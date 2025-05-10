@@ -1,7 +1,7 @@
+using HeroLogic.Animators;
 using UnityEngine;
-using WelwiseCharacter.Runtime.Scripts.HeroLogic.Animators;
 
-namespace WelwiseCharacter.Runtime.Scripts.HeroLogic
+namespace HeroLogic
 {
     public class MoveComponent : MonoBehaviour
     {

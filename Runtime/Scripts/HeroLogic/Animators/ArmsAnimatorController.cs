@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace WelwiseCharacter.Runtime.Scripts.HeroLogic.Animators
+namespace HeroLogic.Animators
 {
     public class ArmsAnimatorController : MonoBehaviour
     {

@@ -22,8 +22,9 @@ namespace ClientInput
 #if UNITY_STANDALONE
             _inputHandler = new InputHandler();
             _cursorHandler = (ICursorHandler)_inputHandler;
+            
             if (CursorSwitcherTools.IsCursorEnabled)
-                CursorSwitcherTools.DisableCursor();
+                CursorSwitcherTools.TryDisablingCursor();
 
 #elif UNITY_WEBGL
             if (DeviceDetectorTools.IsMobile())
@@ -37,12 +38,12 @@ namespace ClientInput
                 _cursorHandler = (ICursorHandler)_inputHandler;
                 
                 if (CursorSwitcherTools.IsCursorEnabled)
-                    CursorSwitcherTools.DisableCursor();
+                    CursorSwitcherTools.TryDisablingCursor();
             }
 #else
-            _inputHandler = new MobileInputHandler(_hud);
+            _inputHandler = new MobileInputHandler(_mobileHud);
 #endif
-            
+
             _moveComponent = moveComponent;
             _cameraComponent = cameraComponent;
             _isInitialized = true;
@@ -69,7 +70,7 @@ namespace ClientInput
         {
             var isCameraRotate = _inputHandler.GetCameraInputData();
             if (_inputHandler.SwitchCameraMode()) _cameraComponent.SwitchCameraMode();
-            
+
             if (isCameraRotate.IsPressed && CursorSwitcherTools.IsCursorEnabled || !CursorSwitcherTools.IsCursorEnabled)
             {
                 _cameraComponent.Rotate(isCameraRotate.InputAxisX, isCameraRotate.InputAxisY);
@@ -78,10 +79,10 @@ namespace ClientInput
 
         private void HandleCursorSwitch()
         {
-            if (_cursorHandler.SwitchCursor() && !_cameraComponent.IsFirstCamera) SwitchCursor();
+            if (_cursorHandler.SwitchCursor() && !_cameraComponent.IsFirstCamera)
+                CursorSwitcherTools.TrySwitchingCursor();
         }
-
-        private void SwitchCursor() => CursorSwitcherTools.SwitchCursor();
+        
 
         private void HandleMovementInput()
         {

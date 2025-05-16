@@ -45,7 +45,7 @@ namespace HeroLogic
         {
             IsFirstCamera = !IsFirstCamera;
             OnCameraModeChanged?.Invoke(IsFirstCamera);
-            SwitchBodyMode();
+            TrySwitchingBodyMode();
         }
 
 
@@ -63,14 +63,10 @@ namespace HeroLogic
         }
 
 
-        private void SwitchBodyMode()
+        private void TrySwitchingBodyMode()
         {
-#if UNITY_EDITOR || UNITY_STANDALONE
             if (IsFirstCamera)
-            {
-                CursorSwitcherTools.DisableCursor();
-            }
-#endif
+                CursorSwitcherTools.TryDisablingCursor();
         }
 
 

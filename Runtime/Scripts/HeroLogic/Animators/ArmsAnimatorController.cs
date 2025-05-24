@@ -1,7 +1,8 @@
 using UnityEngine;
 
-namespace HeroLogic.Animators
+namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.HeroLogic.Animators
 {
+    
     public class ArmsAnimatorController : MonoBehaviour
     {
         [SerializeField] private Animator _animator;

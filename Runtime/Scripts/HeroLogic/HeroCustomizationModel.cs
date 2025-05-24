@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace HeroLogic
+namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.HeroLogic
 {
     [CreateAssetMenu(menuName = "HeroCustomizationModel", fileName = "HeroCustomizationModel")]
     public class HeroCustomizationModel : ScriptableObject

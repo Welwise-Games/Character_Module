@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HeroLogic
+namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.HeroLogic.Animators
 {
     public class AnimatorComponent : MonoBehaviour
     {
@@ -39,7 +39,6 @@ namespace HeroLogic
             if (!_isMoving)
             {
                 _idleTimer -= Time.deltaTime;
-                Debug.Log(_idleTimer);
                 if (_idleTimer <= 0)
                 {
                     _idleTimer = _idleAnimationDelay;

@@ -1,9 +1,8 @@
-using MainHub.Modules.WelwiseCharacter.Runtime.Scripts.HeroLogic;
-using MainHub.Modules.WelwiseSharedModule.Runtime.Scripts.Client.Tools;
-using MainHub.Modules.WelwiseSharedModule.Runtime.Scripts.Tools;
 using UnityEngine;
+using WelwiseCharacterModule.Runtime.Scripts.HeroLogic;
+using WelwiseSharedModule.Runtime.Scripts.Client.Tools;
 
-namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
 {
     public class InputService : MonoBehaviour
     {

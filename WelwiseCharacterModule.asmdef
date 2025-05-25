@@ -1,5 +1,5 @@
 {
-    "name": "welwise.input.runtime",
+    "name": "WelwiseCharacterModule",
     "rootNamespace": "",
     "references": [
         "GUID:79ec8d2d27f5c9b4491c6bc3d72c2646"

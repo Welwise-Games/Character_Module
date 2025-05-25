@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
 {
     public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
     {

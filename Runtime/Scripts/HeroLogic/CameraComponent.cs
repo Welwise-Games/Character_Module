@@ -1,9 +1,8 @@
 using System;
-using MainHub.Modules.WelwiseSharedModule.Runtime.Scripts.Client.Tools;
-using MainHub.Modules.WelwiseSharedModule.Runtime.Scripts.Tools;
 using UnityEngine;
+using WelwiseSharedModule.Runtime.Scripts.Client.Tools;
 
-namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.HeroLogic
+namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
 {
     public class CameraComponent : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
 {
     public interface IInputHandler
     {

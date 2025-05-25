@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace MainHub.Modules.WelwiseCharacter.Runtime.Scripts.ClientInput
+namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
 {
     public class MobileInputHandler : IMobileInputHandler
     {

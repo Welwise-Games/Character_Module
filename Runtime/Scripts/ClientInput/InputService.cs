@@ -1,6 +1,6 @@
 using UnityEngine;
 using WelwiseCharacterModule.Runtime.Scripts.HeroLogic;
-using WelwiseSharedModule.Runtime.Scripts.Client.Tools;
+using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 
 namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
 {

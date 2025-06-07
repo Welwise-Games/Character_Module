@@ -1,6 +1,7 @@
 using UnityEngine;
 using WelwiseCharacterModule.Runtime.Scripts.ClientInput;
 using WelwiseCharacterModule.Runtime.Scripts.HeroLogic.Animators;
+using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
 
 namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
 {
@@ -23,17 +24,21 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
         {
             if (IsInitialized)
                 return;
-            
+
             _inputService = GetComponent<InputService>();
             _cameraComponent = GetComponent<CameraComponent>();
             _moveComponent.Initialize(_cameraComponent, _heroAnimatorController, _armsAnimatorController, Camera.main);
-            _inputService.Construct(mobileHud, _moveComponent, _cameraComponent);
+
+            if (DeviceDetectorTools.IsMobile())
+                _inputService.MobileConstruct(mobileHud, _moveComponent, _cameraComponent);
+            else
+                _inputService.StandaloneConstruct(_moveComponent, _cameraComponent);
+
             _cameraComponent.Construct(transform, Camera.main);
             _cameraObserver = new CameraObserver(_cameraComponent,
                 GetComponentInChildren<SkinColorChanger>());
-            
+
             IsInitialized = true;
         }
-
     }
 }

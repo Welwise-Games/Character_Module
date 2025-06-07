@@ -8,51 +8,42 @@ namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
     {
         public bool IsEnabled { get; private set; }
 
-        private MobileHud _mobileHud;
         private IInputHandler _inputHandler;
         private ICursorHandler _cursorHandler;
         private MoveComponent _moveComponent;
         private CameraComponent _cameraComponent;
-        private bool _isInitialized;
+        private bool _isConstructed;
 
-        public void Construct(MobileHud mobileMobileHud, MoveComponent moveComponent, CameraComponent cameraComponent)
+        public void MobileConstruct(MobileHud mobileHud, MoveComponent moveComponent, CameraComponent cameraComponent)
         {
-            _mobileHud = mobileMobileHud;
+            mobileHud.Enable();
+            _inputHandler = new MobileInputHandler(mobileHud);
+            
+            SharedConstruct(moveComponent, cameraComponent);
+        }
 
-#if UNITY_STANDALONE
+        public void StandaloneConstruct(MoveComponent moveComponent, CameraComponent cameraComponent)
+        {
             _inputHandler = new InputHandler();
             _cursorHandler = (ICursorHandler)_inputHandler;
-            
+                
             if (CursorSwitcherTools.IsCursorEnabled)
                 CursorSwitcherTools.TryDisablingCursor();
+            
+            SharedConstruct(moveComponent, cameraComponent);
+        }
 
-#elif UNITY_WEBGL
-            if (DeviceDetectorTools.IsMobile())
-            {
-                _mobileHud.Enable();
-                _inputHandler = new MobileInputHandler(_mobileHud);
-            }
-            else
-            {
-                _inputHandler = new InputHandler();
-                _cursorHandler = (ICursorHandler)_inputHandler;
-                
-                if (CursorSwitcherTools.IsCursorEnabled)
-                    CursorSwitcherTools.TryDisablingCursor();
-            }
-#else
-            _inputHandler = new MobileInputHandler(_mobileHud);
-#endif
-
+        private void SharedConstruct(MoveComponent moveComponent, CameraComponent cameraComponent)
+        {
             _moveComponent = moveComponent;
             _cameraComponent = cameraComponent;
-            _isInitialized = true;
+            _isConstructed = true;
             IsEnabled = true;
         }
 
         private void Update()
         {
-            if (!_isInitialized || !IsEnabled) return;
+            if (!_isConstructed || !IsEnabled) return;
             if (_inputHandler.IsJump())
             {
                 _moveComponent.Jump();
@@ -82,7 +73,7 @@ namespace WelwiseCharacterModule.Runtime.Scripts.ClientInput
             if (_cursorHandler.SwitchCursor() && !_cameraComponent.IsFirstCamera)
                 CursorSwitcherTools.TrySwitchingCursor();
         }
-        
+
 
         private void HandleMovementInput()
         {

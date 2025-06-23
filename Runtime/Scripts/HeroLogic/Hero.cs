@@ -27,7 +27,7 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
 
             _inputService = GetComponent<InputService>();
             _cameraComponent = GetComponent<CameraComponent>();
-            _moveComponent.Initialize(_cameraComponent, _heroAnimatorController, _armsAnimatorController, Camera.main);
+            _moveComponent.Construct(_heroAnimatorController, _armsAnimatorController, Camera.main.transform, _cameraComponent);
 
             if (DeviceDetectorTools.IsMobile())
                 _inputService.MobileConstruct(mobileHud, _moveComponent, _cameraComponent);

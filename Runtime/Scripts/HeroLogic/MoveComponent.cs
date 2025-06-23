@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using WelwiseCharacterModule.Runtime.Scripts.HeroLogic.Animators;
 
@@ -5,6 +6,8 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
 {
     public class MoveComponent : MonoBehaviour
     {
+        public event Action Jumped, MovedOnGround, NotMovedOnGround;
+
         [SerializeField] private CharacterController _characterController;
         [SerializeField] private float _moveSpeed = 1f;
         [SerializeField] private float _rotationSpeed;
@@ -18,7 +21,7 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
         private bool _isInitialized;
         private HeroAnimatorController _heroAnimatorComp;
         private ArmsAnimatorController _armsAnimatorComp;
-        private Camera _playerCamera;
+        private Transform _playerTransform;
         private CameraComponent _cameraComponent;
 
         public void SetDirection(Vector3 direction)
@@ -27,13 +30,13 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
         }
 
 
-        public void Initialize(CameraComponent cameraComponent, HeroAnimatorController animatorComponent,
-            ArmsAnimatorController armsAnimatorComponent, Camera camera)
+        public void Construct(HeroAnimatorController animatorComponent, ArmsAnimatorController armsAnimatorComponent,
+            Transform playerTransform, CameraComponent cameraComponent = null)
         {
             _cameraComponent = cameraComponent;
             _heroAnimatorComp = animatorComponent;
             _armsAnimatorComp = armsAnimatorComponent;
-            _playerCamera = camera;
+            _playerTransform = playerTransform;
             _isInitialized = true;
         }
 
@@ -43,35 +46,29 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
             HandleGravity();
             Move(_lastDirection);
 
-            if (!_characterController.isGrounded && _verticalVelocity < 0)
-            {
-                _heroAnimatorComp.Fall(true);
-            }
-            else
-            {
-                _heroAnimatorComp.Fall(false);
-            }
+            _heroAnimatorComp.Fall(!_characterController.isGrounded && _verticalVelocity < 0);
         }
 
-        private void HandleGravity()
-        {
-            _verticalVelocity += _gravityForce * Time.deltaTime;
-        }
-
+        private void HandleGravity() => _verticalVelocity += _gravityForce * Time.deltaTime;
 
         private void Move(Vector3 direction)
         {
             _heroAnimatorComp.Run(direction.magnitude != 0);
             _armsAnimatorComp.Run(direction.magnitude != 0);
-            var cameraForwardXZ = new Vector3(_playerCamera.transform.forward.x, 0f, _playerCamera.transform.forward.z)
+            var forwardDirection = new Vector3(_playerTransform.forward.x, 0f, _playerTransform.forward.z)
                 .normalized;
-            var cameraRightXZ = new Vector3(_playerCamera.transform.right.x, 0f, _playerCamera.transform.right.z)
+            var rightDirection = new Vector3(_playerTransform.right.x, 0f, _playerTransform.right.z)
                 .normalized;
-            var movementDirection = cameraRightXZ * direction.x + cameraForwardXZ * direction.z;
+            var movementDirection = rightDirection * direction.x + forwardDirection * direction.z;
             var movementDelta = movementDirection * _moveSpeed * Time.deltaTime;
             Rotate(movementDelta);
             var finalMovement = new Vector3(movementDelta.x, _verticalVelocity * Time.deltaTime, movementDelta.z);
             _characterController.Move(finalMovement);
+
+            if (direction.magnitude != 0 && _characterController.isGrounded)
+                MovedOnGround?.Invoke();
+            else
+                NotMovedOnGround?.Invoke();
         }
 
 
@@ -88,24 +85,22 @@ namespace WelwiseCharacterModule.Runtime.Scripts.HeroLogic
 
         public void Jump()
         {
-            if (CanJump())
+            if (!CanJump()) return;
+
+            if (!_cameraComponent || !_cameraComponent.IsFirstCamera)
             {
-                if (_cameraComponent.IsFirstCamera)
-                {
-                    _armsAnimatorComp.Jump();
-                }
-                else
-                {
-                    _heroAnimatorComp.Jump();
-                }
-
-                _verticalVelocity = Mathf.Sqrt(_jumpForce * -2f * _gravityForce);
+                _heroAnimatorComp.Jump();
             }
+            else
+            {
+                _armsAnimatorComp.Jump();
+            }
+
+            _verticalVelocity = Mathf.Sqrt(_jumpForce * -2f * _gravityForce);
+
+            Jumped?.Invoke();
         }
 
-        private bool CanJump()
-        {
-            return _characterController.isGrounded;
-        }
+        private bool CanJump() => _characterController.isGrounded;
     }
 }

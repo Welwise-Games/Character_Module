@@ -8,24 +8,21 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
     {
         public float VerticalVelocity { get; private set; }
 
-        public bool IsEnabled { get; set; }
-
-        private CharacterController CharacterController =>
-            _serializableComponents.CharacterController ?? _characterController;
+        public bool IsEnabled { get; set; } = true;
 
         public event Action Jumped, MovedOnGround, NotMovedOnGround;
         public event Action<Vector3> Moved;
 
-        private readonly Transform _playerTransform;
+        private readonly Transform _cameraTransform;
         private readonly OwnerPlayerMovementSerializableComponents _serializableComponents;
         private readonly CharacterController _characterController;
         private readonly IInputService _inputService;
 
-        public OwnerPlayerMovementController(Transform playerTransform,
+        public OwnerPlayerMovementController(Transform cameraTransform,
             OwnerPlayerMovementSerializableComponents serializableComponents, IInputService inputService,
-            CharacterController characterController = null)
+            CharacterController characterController)
         {
-            _playerTransform = playerTransform;
+            _cameraTransform = cameraTransform;
             _serializableComponents = serializableComponents;
             _inputService = inputService;
             _characterController = characterController;
@@ -37,8 +34,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
         {
             if (!_characterController.isGrounded) return;
 
-            VerticalVelocity = _serializableComponents.MovementConfig.JumpForce *
-                               _serializableComponents.MovementConfig.GravityForce;
+            VerticalVelocity = _serializableComponents.MovementConfig.JumpForce;
 
             Jumped?.Invoke();
         }
@@ -50,9 +46,11 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 
             HandleGravity();
 
-            Move(!IsEnabled
-                ? Vector2.zero
-                : _inputService.GetInputAxis(), out var movementDelta);
+            var inputAxis = !IsEnabled
+                ? Vector3.zero
+                : _inputService.GetInputAxis();
+            
+            Move(inputAxis, out var movementDelta);
 
             TryRotating(movementDelta);
         }
@@ -60,21 +58,21 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
         private void HandleGravity() =>
             VerticalVelocity += _serializableComponents.MovementConfig.GravityForce * Time.deltaTime;
 
-        private void Move(Vector2 direction, out Vector3 movementDelta)
+        private void Move(Vector3 direction, out Vector3 movementDelta)
         {
-            var forwardDirection = new Vector3(_playerTransform.forward.x, 0f, _playerTransform.forward.z).normalized;
-            var rightDirection = new Vector3(_playerTransform.right.x, 0f, _playerTransform.right.z).normalized;
-            var movementDirection = rightDirection * direction.x + forwardDirection * direction.y;
+            var forwardDirection = new Vector3(_cameraTransform.forward.x, 0f, _cameraTransform.forward.z).normalized;
+            var rightDirection = new Vector3(_cameraTransform.right.x, 0f, _cameraTransform.right.z).normalized;
+            var movementDirection = rightDirection * direction.x + forwardDirection * direction.z;
 
-            movementDelta = movementDirection * _serializableComponents.MovementConfig.MoveSpeed * Time.deltaTime;
+            movementDelta = movementDirection * (_serializableComponents.MovementConfig.MoveSpeed * Time.deltaTime);
 
             var finalMovement = new Vector3(movementDelta.x, VerticalVelocity * Time.deltaTime, movementDelta.z);
 
-            CharacterController.Move(finalMovement);
+            _characterController.Move(finalMovement);
 
             Moved?.Invoke(direction);
 
-            if (direction.magnitude != 0 && CharacterController.isGrounded)
+            if (direction.magnitude != 0 && _characterController.isGrounded)
                 MovedOnGround?.Invoke();
             else
                 NotMovedOnGround?.Invoke();
@@ -82,11 +80,11 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 
         private void TryRotating(Vector3 direction)
         {
-            if (!(direction.magnitude > 0)) return;
+            if (direction.magnitude == 0) return;
 
             var targetRotation = Quaternion.LookRotation(direction);
-            CharacterController.transform.rotation =
-                Quaternion.Lerp(CharacterController.transform.rotation, targetRotation,
+            _characterController.transform.rotation =
+                Quaternion.Lerp(_characterController.transform.rotation, targetRotation,
                     _serializableComponents.MovementConfig.RotationSpeed * Time.deltaTime);
         }
     }

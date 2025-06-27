@@ -1,5 +1,4 @@
 using UnityEngine;
-using WelwiseChangingAnimationModule.Runtime.Client.Scripts;
 using WelwiseCharacterModule.Runtime.Client.Scripts.HeroAnimators;
 using WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement;
 using WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera;

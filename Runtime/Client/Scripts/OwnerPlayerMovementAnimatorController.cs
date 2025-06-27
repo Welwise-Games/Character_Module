@@ -11,9 +11,8 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts
     {
         public OwnerPlayerMovementAnimatorController(OwnerPlayerMovementController ownerPlayerMovementController,
             MonoBehaviourObserver monoBehaviourObserver,
-            OwnerPlayerMovementSerializableComponents ownerPlayerMovementSerializableComponents,
             CameraController cameraController, HeroAnimatorController heroAnimatorController,
-            ArmsAnimatorController armsAnimatorController)
+            ArmsAnimatorController armsAnimatorController, CharacterController characterController)
         {
             ownerPlayerMovementController.Jumped += TriggerJump;
             ownerPlayerMovementController.Moved += HandleIsRunning;
@@ -28,7 +27,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts
             void HandleIsFalling()
             {
                 heroAnimatorController.SetIsFalling(
-                    !ownerPlayerMovementSerializableComponents.CharacterController.isGrounded &&
+                    !characterController.isGrounded &&
                     ownerPlayerMovementController.VerticalVelocity < 0);
             }
 

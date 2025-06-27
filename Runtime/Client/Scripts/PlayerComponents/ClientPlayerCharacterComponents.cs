@@ -1,4 +1,3 @@
-using Modules.WelwiseChatModule.Runtime.Client.Scripts.UI;
 using WelwiseClothesSharedModule.Runtime.Client.Scripts;
 using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations;
 

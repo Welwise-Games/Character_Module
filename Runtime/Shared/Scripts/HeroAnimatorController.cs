@@ -5,9 +5,9 @@ namespace WelwiseCharacterModule.Runtime.Shared.Scripts
 {
     public class HeroAnimatorController
     {
-        private readonly int _isRunningToHash = Animator.StringToHash("isRunning");
-        private readonly int _isFallingToHash = Animator.StringToHash("isFalling");
-        private readonly int _jumpToHash = Animator.StringToHash("jump");
+        private readonly int _isRunningHash = Animator.StringToHash("isRunning");
+        private readonly int _isFallingHash = Animator.StringToHash("isFalling");
+        private readonly int _jumpHash = Animator.StringToHash("jump");
         private readonly Animator _animator;
         private readonly NetworkAnimator _networkAnimator;
 
@@ -23,12 +23,11 @@ namespace WelwiseCharacterModule.Runtime.Shared.Scripts
             _networkAnimator = networkAnimator;
         }
 
-        public void TriggerJump() => _networkAnimator.SetTrigger(_jumpToHash);
+        public void TriggerJump() => _networkAnimator.SetTrigger(_jumpHash);
 
-        public void SetIsRunning(bool isRunning) =>
-            _animator.SetBool(_isRunningToHash, isRunning);
+        public void SetIsRunning(bool isRunning) => _animator.SetBool(_isRunningHash, isRunning);
 
         public void SetIsFalling(bool isFalling) =>
-            _animator.SetBool(_isFallingToHash, isFalling);
+            _animator.SetBool(_isFallingHash, isFalling);
     }
 }

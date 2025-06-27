@@ -7,8 +7,8 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.InputServices
         private const string HorizontalAxis = "Horizontal";
         private const string VerticalAxis = "Vertical";
 
-        public Vector2 GetInputAxis() =>
-            new Vector2(UnityEngine.Input.GetAxisRaw(HorizontalAxis),
+        public Vector3 GetInputAxis() =>
+            new Vector3(UnityEngine.Input.GetAxisRaw(HorizontalAxis), 0,
                 UnityEngine.Input.GetAxisRaw(VerticalAxis));
 
         public bool ShouldJump() => UnityEngine.Input.GetKeyDown(KeyCode.Space);

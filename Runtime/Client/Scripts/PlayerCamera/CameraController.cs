@@ -7,7 +7,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
 {
     public class CameraController
     {
-        public float CameraDistance { get; private set; }
+        public float DistanceBetweenPlayerAndCamera => Vector3.Distance(_camera.transform.position, _playerTransform.position);
         public bool IsFirstCameraMode { get; private set; }
 
         public event Action<bool> ChangedCameraMode;
@@ -19,16 +19,16 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
         private float _targetZoom = 1f;
 
         private readonly Camera _camera;
-        private readonly Transform _target;
+        private readonly Transform _playerTransform;
         private readonly CameraControllerSerializableComponents _serializableComponents;
         private readonly IInputService _inputService;
         private readonly ICursorHandler _cursorHandler;
 
-        public CameraController(Transform target, Camera camera,
+        public CameraController(Transform playerTransform, Camera camera,
             CameraControllerSerializableComponents serializableComponents, IInputService inputService,
             ICursorHandler cursorHandler)
         {
-            _target = target;
+            _playerTransform = playerTransform;
             _camera = camera;
             _serializableComponents = serializableComponents;
             _inputService = inputService;
@@ -48,7 +48,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
             if (cameraInputData.IsHold && CursorSwitcherTools.IsCursorEnabled || !CursorSwitcherTools.IsCursorEnabled)
                 TryRotating(cameraInputData.InputAxis);
 
-            if (!DeviceDetectorTools.IsMobile() && _cursorHandler != null && _cursorHandler.ShouldSwitchCursor() && IsFirstCameraMode)
+            if (_cursorHandler != null && _cursorHandler.ShouldSwitchCursor())
                 CursorSwitcherTools.TrySwitchingCursor();
         }
 
@@ -56,11 +56,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
         {
             IsFirstCameraMode = !IsFirstCameraMode;
             ChangedCameraMode?.Invoke(IsFirstCameraMode);
-            TrySwitchingBodyMode();
-        }
-
-        private void TrySwitchingBodyMode()
-        {
+           
             if (IsFirstCameraMode)
                 CursorSwitcherTools.TryDisablingCursor();
         }
@@ -94,7 +90,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
 
             var rotation = Quaternion.Euler(_currentVerticalAngle, _currentHorizontalAngle, 0);
             var desiredPosition =
-                _target.position + rotation * (_serializableComponents.CameraConfig.Offset * _currentZoom);
+                _playerTransform.position + rotation * (_serializableComponents.CameraConfig.Offset * _currentZoom);
 
             var zoomFactor =
                 Mathf.InverseLerp(
@@ -103,13 +99,12 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
             _additionalLookUpAngle =
                 Mathf.Lerp(0f, _serializableComponents.CameraConfig.MaximumLookUpAngle, 1f - zoomFactor);
             _camera.transform.position = desiredPosition;
-            CameraDistance = Vector3.Distance(_camera.transform.position, _target.position);
-            _camera.transform.LookAt(_target.position + Vector3.up * (_additionalLookUpAngle * 0.1f));
+            _camera.transform.LookAt(_playerTransform.position + Vector3.up * (_additionalLookUpAngle * 0.1f));
         }
 
         private void TryRotating(Vector2 inputAxis)
         {
-            if (!(Mathf.Approximately(inputAxis.x, 0f) && Mathf.Approximately(inputAxis.y, 0f)))
+            if (Mathf.Approximately(inputAxis.x, 0f) && Mathf.Approximately(inputAxis.y, 0f))
                 return;
 
             _currentHorizontalAngle += inputAxis.x * _serializableComponents.CameraConfig.RotationSpeed;

@@ -8,7 +8,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.HeroAnimators
         private readonly ArmsAnimatorSerializableComponents _armsAnimatorSerializableComponents;
         private readonly int _isRunningHash = Animator.StringToHash("isRunning");
         private readonly int _jumpHash = Animator.StringToHash("jump");
-        private readonly int _idleHash = Animator.StringToHash("idleHash");
+        private readonly int _idleHash = Animator.StringToHash("idle");
 
         private readonly Timer _timer;
         private readonly Animator _animator;

@@ -6,9 +6,9 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
     [Serializable]
     public class OwnerPlayerMovementConfig
     {
-        [field: SerializeField] public float MoveSpeed { get; private set; } = 1f;
-        [field: SerializeField] public float RotationSpeed { get; private set; }
-        [field: SerializeField] public float JumpForce { get; private set; }
-        [field: SerializeField] public float GravityForce { get; private set; }
+        [field: SerializeField] [field: Range(0.1f, 100)] public float MoveSpeed { get; private set; } = 10f;
+        [field: SerializeField] [field: Range(10, 100)] public float RotationSpeed { get; private set; } = 30f;
+        [field: SerializeField] [field: Range(0.1f, 10f)] public float JumpForce { get; private set; } = 2;
+        [field: SerializeField] [field: Range(-30, -10)] public float GravityForce { get; private set; } = -10;
     }
 }

@@ -1,6 +1,3 @@
-using WelwiseClothesSharedModule.Runtime.Client.Scripts;
-using WelwiseEmotionsModule.Runtime.Client.Scripts.Animations;
-
 namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerComponents
 {
     public class ClientPlayerCharacterComponents

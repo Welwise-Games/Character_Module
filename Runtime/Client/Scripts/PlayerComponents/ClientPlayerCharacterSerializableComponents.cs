@@ -1,7 +1,4 @@
-using TMPro;
 using UnityEngine;
-using WelwiseClothesSharedModule.Runtime.Client.Scripts;
-using WelwiseSharedModule.Runtime.Client.Scripts;
 
 namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerComponents
 {

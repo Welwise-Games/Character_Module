@@ -5,9 +5,11 @@ namespace WelwiseCharacterModule.Runtime.Shared.Scripts
 {
     public class HeroAnimatorController
     {
-        private readonly int _isRunningHash = Animator.StringToHash("isRunning");
-        private readonly int _isFallingHash = Animator.StringToHash("isFalling");
-        private readonly int _jumpHash = Animator.StringToHash("jump");
+        public static readonly int RunHash = Animator.StringToHash("Run");
+        
+        private static readonly int _isRunningHash = Animator.StringToHash("isRunning");
+        private static readonly int _isFallingHash = Animator.StringToHash("isFalling");
+        private static readonly int _jumpHash = Animator.StringToHash("jump");
         private readonly Animator _animator;
         private readonly NetworkAnimator _networkAnimator;
 

@@ -3085,7 +3085,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d54bcc468e147c40afade1c93484890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IdleAnimationDelay>k__BackingField: 8
+  <Animator>k__BackingField: {fileID: 2816891599524747076}
 --- !u!1 &8633520589960785623
 GameObject:
   m_ObjectHideFlags: 0

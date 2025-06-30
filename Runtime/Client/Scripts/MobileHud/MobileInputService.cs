@@ -15,15 +15,19 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.MobileHud
 
         public void ClearMobileHudController() => _mobileHudController = null;
 
-        public Vector3 GetInputAxis() => new Vector3(_mobileHudController.JoystickController.InputAxis.x, 0,
-            _mobileHudController.JoystickController.InputAxis.y);
+        public Vector3 GetInputAxis() => _mobileHudController == null
+            ? Vector3.zero
+            : new Vector3(_mobileHudController.JoystickController.InputAxis.x, 0,
+                _mobileHudController.JoystickController.InputAxis.y);
 
-        public bool ShouldSwitchCameraMode() => _mobileHudController.SwitchCameraHoldableButtonController.IsHold();
-        public bool ShouldJump() => _mobileHudController.JumpHoldableButtonController.IsHold();
+        public bool ShouldSwitchCameraMode() => _mobileHudController != null &&
+                                                _mobileHudController.SwitchCameraHoldableButtonController.IsHold();
+
+        public bool ShouldJump() => _mobileHudController != null && _mobileHudController.JumpHoldableButtonController.IsHold();
 
         public CameraInputData GetCameraInputData()
         {
-            if (UnityEngine.Input.touchCount <= 0) return new CameraInputData();
+            if (UnityEngine.Input.touchCount <= 0 || _mobileHudController == null) return new CameraInputData();
 
             var touches = Enumerable.Range(0, UnityEngine.Input.touchCount).Select(UnityEngine.Input.GetTouch).ToList();
 

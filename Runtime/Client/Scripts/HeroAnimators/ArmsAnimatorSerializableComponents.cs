@@ -4,6 +4,6 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.HeroAnimators
 {
     public class ArmsAnimatorSerializableComponents : MonoBehaviour
     {
-        [field: SerializeField] public float IdleAnimationDelay { get; private set; } = 8f;
+        [field: SerializeField] public Animator Animator { get; private set; }
     }
 }

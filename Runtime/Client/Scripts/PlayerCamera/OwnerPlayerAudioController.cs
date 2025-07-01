@@ -22,7 +22,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
 
             new AnimationsActionsInvoker(animatorStateObserver,
                 ownerPlayerMovementSerializableComponents.AnimationFramesWhenShouldPlayWalkingSounds.Select(frame =>
-                        new AnimationActionInfo(() => frame, animator, PlayWalkingSoundAsync)).ToList(), HeroAnimatorController.RunHash, true);
+                        new AnimationActionInfo(() => frame, animator, PlayWalkingSoundAsync)).ToList(), HeroAnimatorController.RunHash);
 
             async void PlayWalkingSoundAsync()
             {

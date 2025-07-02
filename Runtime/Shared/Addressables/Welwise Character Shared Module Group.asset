@@ -20,7 +20,8 @@ MonoBehaviour:
   - m_GUID: 89a963433b24dcc46b1a7ba4710339cf
     m_Address: WelwiseNetworkCharacter
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - NetworkObjects
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}

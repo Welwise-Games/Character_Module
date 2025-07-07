@@ -4,8 +4,12 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.InputServices
 {
     public class DekstopInputService : IDesktopInputService
     {
+        private readonly InputConfig _inputConfig;
+
         private const string HorizontalAxis = "Horizontal";
         private const string VerticalAxis = "Vertical";
+
+        public DekstopInputService(InputConfig inputConfig) => _inputConfig = inputConfig;
 
         public Vector3 GetInputAxis() =>
             new Vector3(UnityEngine.Input.GetAxisRaw(HorizontalAxis), 0,
@@ -17,8 +21,8 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.InputServices
             new CameraInputData(Input.GetMouseButton(1), new Vector2(UnityEngine.Input.GetAxis("Mouse X"),
                 -UnityEngine.Input.GetAxis("Mouse Y")));
 
-        public bool ShouldSwitchCursor() => UnityEngine.Input.GetKeyDown(KeyCode.Tab);
+        public bool ShouldSwitchCursor() => UnityEngine.Input.GetKeyDown(_inputConfig.SwitchCursorKeyCode);
 
-        public bool ShouldSwitchCameraMode() => UnityEngine.Input.GetKeyDown(KeyCode.V);
+        public bool ShouldSwitchCameraMode() => UnityEngine.Input.GetKeyDown(_inputConfig.SwitchCursorCameraMode);
     }
 }

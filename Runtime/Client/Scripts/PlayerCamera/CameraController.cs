@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using WelwiseCharacterModule.Runtime.Client.Scripts.InputServices;
 using WelwiseSharedModule.Runtime.Client.Scripts.Tools;
@@ -22,34 +24,31 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
         private readonly Transform _playerTransform;
         private readonly CameraControllerSerializableComponents _serializableComponents;
         private readonly IInputService _inputService;
-        private readonly ICursorHandler _cursorHandler;
+        private readonly List<Func<bool>> _canSwitchCameraModeFuncs = new List<Func<bool>>();
 
         public CameraController(Transform playerTransform, Camera camera,
-            CameraControllerSerializableComponents serializableComponents, IInputService inputService,
-            ICursorHandler cursorHandler)
+            CameraControllerSerializableComponents serializableComponents, IInputService inputService)
         {
             _playerTransform = playerTransform;
             _camera = camera;
             _serializableComponents = serializableComponents;
             _inputService = inputService;
-            _cursorHandler = cursorHandler;
 
             serializableComponents.MonoBehaviourObserver.LateUpdated += OnLateUpdate;
             serializableComponents.MonoBehaviourObserver.Updated += OnUpdate;
         }
 
+        public void AddCanSwitchCameraModeFunc(Func<bool> func) => _canSwitchCameraModeFuncs.Add(func);
+
         private void OnUpdate()
         {
             var cameraInputData = _inputService.GetCameraInputData();
 
-            if (_inputService.ShouldSwitchCameraMode())
+            if (_canSwitchCameraModeFuncs.All(func => func.Invoke()) && _inputService.ShouldSwitchCameraMode())
                 SwitchCameraMode();
 
             if (cameraInputData.IsHold && CursorSwitcherTools.IsCursorEnabled || !CursorSwitcherTools.IsCursorEnabled)
                 TryRotating(cameraInputData.InputAxis);
-
-            if (_cursorHandler != null && _cursorHandler.ShouldSwitchCursor())
-                CursorSwitcherTools.TrySwitchingCursor();
         }
 
         private void SwitchCameraMode()

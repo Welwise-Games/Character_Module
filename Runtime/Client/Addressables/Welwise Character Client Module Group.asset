@@ -17,8 +17,28 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 049edd664386ebd488e799f2c8f87467
   m_SerializeEntries:
+  - m_GUID: 04ecde2d5e9e85b47a93df1d01f40b33
+    m_Address: WelwiseCharacterBase
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07fc870598d49a148b1861a0bd738bc2
+    m_Address: Run
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c2c2b49832863448a7d22057eda4303
     m_Address: DefaultMaterial_Normal_OpenGL
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 13beb9780d79b8a4da07f2f7f1beb11f
+    m_Address: SitDown_Animation
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cc519403084e894184d2f36d846fe3b
+    m_Address: HandMaterial
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -27,8 +47,43 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40206b9f4c79b0345b0839fb436c5241
+    m_Address: T_Pose
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4685dc9f70c0df64c8b0f9a0bd83d87e
+    m_Address: Hair
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48320fbd380a507488fb2c05430ef444
+    m_Address: ArmsController
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54a625fde1f7d7749bd7c9422d95cc6c
+    m_Address: Anim_Run
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7502e527e18965642a31a653460ab657
     m_Address: DefaultMaterial_Base_color
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 958ae8604de4d2e409207320c9a916e6
+    m_Address: Falling
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a64e1ff78870cc44684ba299d11e52a8
+    m_Address: Jump
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b1fd6c63dc823934ab9cac99d768e980
+    m_Address: InputConfig
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -37,8 +92,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcb54843c666bf04f9f239d718391821
+    m_Address: Anim_Idle
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d370a027838ae084f926535750b2981c
+    m_Address: Anim_Jump
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: db406c651cf417745ad50e09d6c5e9b7
     m_Address: BodyMaterial
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e09149ea958ece04ab33dd56b2a671cb
+    m_Address: Idle
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

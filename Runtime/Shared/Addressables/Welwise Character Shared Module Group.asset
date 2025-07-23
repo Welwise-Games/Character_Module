@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Welwise Character Shared Module Group
   m_Data:
     m_SerializedData: []
-  m_GUID: f180396a703ab4342aa5090838fe0357
+  m_GUID: 1e9b01ce041f6a949bec527765780fd7
   m_SerializeEntries:
   - m_GUID: 89a963433b24dcc46b1a7ba4710339cf
     m_Address: WelwiseNetworkCharacter
@@ -27,4 +27,4 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: 237a77756b9c52945863cb194eef1450, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: a0fae9bdff526604da537554de1a35a3, type: 2}
+    - {fileID: 11400000, guid: b8a2188868120bc46aac4f8974e63af3, type: 2}

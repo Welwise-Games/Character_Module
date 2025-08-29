@@ -1,10 +1,11 @@
 ﻿using System;
 using UnityEngine;
 using WelwiseCharacterModule.Runtime.Client.Scripts.InputServices;
+using WelwiseSharedModule.Runtime.Client.Scripts;
 
 namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 {
-    public class OwnerPlayerMovementController
+    public class OwnerPlayerMovementController : IOwnerPlayerMovementStateProvider
     {
         public float VerticalVelocity { get; private set; }
 

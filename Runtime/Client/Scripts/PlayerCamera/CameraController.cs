@@ -20,6 +20,8 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
         private float _currentZoom = 1f;
         private float _targetZoom = 1f;
 
+        private bool _canRotate = true;
+
         private readonly Camera _camera;
         private readonly Transform _playerTransform;
         private readonly CameraControllerSerializableComponents _serializableComponents;
@@ -39,7 +41,8 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
         }
 
         public void AddCanSwitchCameraModeFunc(Func<bool> func) => _canSwitchCameraModeFuncs.Add(func);
-
+        public void SetCanRotate(bool canRotate) => _canRotate = canRotate;
+        
         private void OnUpdate()
         {
             var cameraInputData = _inputService.GetCameraInputData();
@@ -103,7 +106,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.PlayerCamera
 
         private void TryRotating(Vector2 inputAxis)
         {
-            if (Mathf.Approximately(inputAxis.x, 0f) && Mathf.Approximately(inputAxis.y, 0f))
+            if (!_canRotate || Mathf.Approximately(inputAxis.x, 0f) && Mathf.Approximately(inputAxis.y, 0f))
                 return;
 
             _currentHorizontalAngle += inputAxis.x * _serializableComponents.CameraConfig.RotationSpeed;

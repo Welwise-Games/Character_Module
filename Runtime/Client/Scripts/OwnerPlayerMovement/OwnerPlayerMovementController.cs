@@ -9,7 +9,8 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
     {
         public float VerticalVelocity { get; private set; }
 
-        public bool IsEnabled { get; set; } = true;
+        public bool IsMovementEnabled { get; set; } = true;
+        public bool IsGravityEnabled { get; private set; } = true;
 
         public event Action Jumped, MovedOnGround, NotMovedOnGround;
         public event Action<Vector3> Moved;
@@ -31,6 +32,14 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
             serializableComponents.MonoBehaviourObserver.Updated += OnUpdate;
         }
 
+        public void SetIsGravityEnabled(bool isGravityEnabled)
+        {
+            IsGravityEnabled = isGravityEnabled;
+
+            if (!isGravityEnabled)
+                VerticalVelocity = 0;
+        }
+
         public void TryJumping()
         {
             if (!_characterController.isGrounded) return;
@@ -47,17 +56,20 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 
             HandleGravity();
 
-            var inputAxis = !IsEnabled
+            var inputAxis = !IsMovementEnabled
                 ? Vector3.zero
                 : _inputService.GetInputAxis();
-            
+
             Move(inputAxis, out var movementDelta);
 
             TryRotating(movementDelta);
         }
 
-        private void HandleGravity() =>
-            VerticalVelocity += _serializableComponents.MovementConfig.GravityForce * Time.deltaTime;
+        private void HandleGravity()
+        {
+            if (IsGravityEnabled)
+                VerticalVelocity += _serializableComponents.MovementConfig.GravityForce * Time.deltaTime;
+        }
 
         private void Move(Vector3 direction, out Vector3 movementDelta)
         {

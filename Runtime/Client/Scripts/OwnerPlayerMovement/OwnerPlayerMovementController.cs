@@ -11,7 +11,6 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
         public bool IsMovementEnabled { get; set; } = true;
         public bool IsGravityEnabled { get; private set; } = true;
         public float VerticalVelocity { get; private set; }
-        public bool IsGravityEnabled { get; private set; } = true;
 
         public event Action Jumped, MovedOnGround, NotMovedOnGround;
         public event Action<Vector3> Moved;

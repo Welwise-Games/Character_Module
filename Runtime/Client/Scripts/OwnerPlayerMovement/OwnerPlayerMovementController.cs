@@ -7,9 +7,10 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 {
     public class OwnerPlayerMovementController : IOwnerPlayerMovementStateProvider
     {
-        public float VerticalVelocity { get; private set; }
-
+        public bool ShouldJumpInAnyCase { get; set; }
         public bool IsMovementEnabled { get; set; } = true;
+        public bool IsGravityEnabled { get; private set; } = true;
+        public float VerticalVelocity { get; private set; }
         public bool IsGravityEnabled { get; private set; } = true;
 
         public event Action Jumped, MovedOnGround, NotMovedOnGround;
@@ -42,7 +43,7 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 
         public void TryJumping()
         {
-            if (!_characterController.isGrounded) return;
+            if (!ShouldJumpInAnyCase && !_characterController.isGrounded) return;
 
             VerticalVelocity = _serializableComponents.MovementConfig.JumpForce;
 
@@ -73,6 +74,11 @@ namespace WelwiseCharacterModule.Runtime.Client.Scripts.OwnerPlayerMovement
 
         private void Move(Vector3 direction, out Vector3 movementDelta)
         {
+            movementDelta = Vector3.zero;
+            
+            if (!_characterController.enabled)
+                return;
+            
             var forwardDirection = new Vector3(_cameraTransform.forward.x, 0f, _cameraTransform.forward.z).normalized;
             var rightDirection = new Vector3(_cameraTransform.right.x, 0f, _cameraTransform.right.z).normalized;
             var movementDirection = rightDirection * direction.x + forwardDirection * direction.z;
